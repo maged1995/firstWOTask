@@ -12,8 +12,8 @@ class SessionsController < ApplicationController
       token = JsonWebToken.encode(user_id: @author.id)
       time = Time.now + 24.hours.to_i
       render json: { token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
-                     username: @author.username }, status: :ok
-      #puts @author.id
+                     id: @author.id, login: 'success' }, status: :ok
+      puts @author.id
       #puts session[:author_id]
       #render json: {"login" => "Welcome #{@author.name}"}
     else
@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    reset_session # wipe out session and everything in it
+    #@current_user.destroy # wipe out session and everything in it
     render json: {"Logout" => "Success"}
   end
 

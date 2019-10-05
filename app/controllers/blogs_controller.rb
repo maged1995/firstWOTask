@@ -1,10 +1,13 @@
 class BlogsController < ApplicationController
 
+  def display
+    @blogs = @current_author.blogs
+    render json: {'blogs' => @blogs}
+  end
+
   def create
-    puts "here"
-    puts session[:author_id]
     @blog = @current_author.blogs.new(name: params[:name], blog: params[:blog])
-    if @blog.save
+    if @blog.name!='' && @blog.blog!='' && @blog.save
       render json: {'blog' => 'Created'}
     else
       render json: {'blog' => 'not Created'}
